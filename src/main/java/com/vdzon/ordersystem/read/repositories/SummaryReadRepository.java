@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SummaryReadRepository {
     final JdbcTemplate jdbcTemplate;
-    ;
 
     @Autowired
     public SummaryReadRepository(JdbcTemplate jdbcTemplate) {

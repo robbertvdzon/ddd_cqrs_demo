@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "bestelregel")
-public class ReadBestelregel {
+public class Bestelregel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -17,7 +17,7 @@ public class ReadBestelregel {
     private int aantal;
     private double stuksPrijs;
 
-    public ReadBestelregel(String product, int aantal, double stuksPrijs) {
+    public Bestelregel(String product, int aantal, double stuksPrijs) {
         this.product = product;
         this.aantal = aantal;
         this.stuksPrijs = stuksPrijs;

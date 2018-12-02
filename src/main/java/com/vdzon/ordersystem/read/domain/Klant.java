@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "klant")
-public class ReadKlant {
+public class Klant {
     @Id
     private long id;
     private String naam;

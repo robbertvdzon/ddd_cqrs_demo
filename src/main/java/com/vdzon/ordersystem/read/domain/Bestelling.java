@@ -12,21 +12,21 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "bestelling")
-public class ReadBestelling {
+public class Bestelling {
     @Id
     private long id;
     private ZonedDateTime bestelDatum = ZonedDateTime.now();
     private long klantId;
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "bestelling_id")
-    private List<ReadBestelregel> bestelRegels = new ArrayList<>();
+    private List<Bestelregel> bestelRegels = new ArrayList<>();
     private double totaalBedrag;
 
-    public ReadBestelling(long bestelId) {
+    public Bestelling(long bestelId) {
         this.id = bestelId;
     }
 
     public void addRegel(String productNaam, int aantal, double stuksprijs) {
-        bestelRegels.add(new ReadBestelregel(productNaam, aantal, stuksprijs));
+        bestelRegels.add(new Bestelregel(productNaam, aantal, stuksprijs));
     }
 }

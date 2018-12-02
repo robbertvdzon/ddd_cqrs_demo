@@ -1,6 +1,6 @@
 package com.vdzon.ordersystem.read.repositories;
 
-import com.vdzon.ordersystem.read.domain.ReadBestelling;
+import com.vdzon.ordersystem.read.domain.Bestelling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class BestellingReadRepository {
         this.entityManager = entityManager;
     }
 
-    public Optional<ReadBestelling> findById(long id) {
-        return Optional.ofNullable(entityManager.find(ReadBestelling.class, id));
+    public Optional<Bestelling> findById(long id) {
+        return Optional.ofNullable(entityManager.find(Bestelling.class, id));
     }
 
 }

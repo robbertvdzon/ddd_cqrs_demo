@@ -1,6 +1,6 @@
 package com.vdzon.ordersystem.read.rest;
 
-import com.vdzon.ordersystem.read.domain.ReadBestelling;
+import com.vdzon.ordersystem.read.domain.Bestelling;
 import com.vdzon.ordersystem.read.repositories.BestellingReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,11 @@ public class BestellingReadResource {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ReadBestelling> getById(@PathVariable long id) {
+    public ResponseEntity<Bestelling> getById(@PathVariable long id) {
         return bestellingRepository
                 .findById(id)
                 .map(bestelling -> new ResponseEntity<>(bestelling, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<ReadBestelling>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<Bestelling>(HttpStatus.NOT_FOUND));
     }
 
 
