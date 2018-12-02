@@ -7,13 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("bestelling")
 public class BestellingResource {
 
     private final BestellingRepository bestellingRepository;
+
+    ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    Validator validator = validatorFactory.getValidator();
+
 
     @Autowired
     public BestellingResource(BestellingRepository bestellingRepository) {
@@ -23,6 +32,24 @@ public class BestellingResource {
     @PostMapping
     public void save(@RequestBody Bestelling bestelling) {
         bestellingRepository.save(bestelling);
+    }
+
+    @PostMapping("addRegel")
+    public void addRegel(
+            @RequestParam("bestelid") long bestelId,
+            @RequestParam("productnaam") String productNaam,
+            @RequestParam("aantal") int aantal,
+            @RequestParam("stuksprijs") double stuksprijs
+    ) {
+        Bestelling bestelling = bestellingRepository.findById(bestelId).orElse(new Bestelling(bestelId));
+        bestelling.addRegel(productNaam, aantal, stuksprijs);
+        Set<ConstraintViolation<Bestelling>> validate = validator.validate(bestelling);
+        if (!validate.isEmpty()) {
+            throw new RuntimeException("No valid!");
+        }
+        Bestelling saved = bestellingRepository.saveAndFlush(bestelling);
+        System.out.println(bestelling);
+        System.out.println(saved);
     }
 
     @GetMapping("all")

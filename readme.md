@@ -64,6 +64,11 @@ Oplossings richting: Voor elk domein object een rest interface en een repository
 echo add user, bestelling en bestelregels
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"naam\":\"user1\"}" http://localhost:8080/klant
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"klantId\":1}" http://localhost:8080/bestelling
+
+curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=stoel&aantal=4&stuksprijs=100"
+
+
+
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"product\":\"tafel\",\"aantal\":1,\"stuksPrijs\":300,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":2, \"product\":\"stoel\",\"aantal\":2,\"stuksPrijs\":100,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":3, \"product\":\"barkruk\",\"aantal\":4,\"stuksPrijs\":100,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
