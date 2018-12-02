@@ -7,12 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("bestelling")
@@ -43,18 +40,8 @@ public class BestellingResource {
     ) {
         Bestelling bestelling = bestellingRepository.findById(bestelId).orElse(new Bestelling(bestelId));
         bestelling.addRegel(productNaam, aantal, stuksprijs);
-        Set<ConstraintViolation<Bestelling>> validate = validator.validate(bestelling);
-        if (!validate.isEmpty()) {
-            throw new RuntimeException("No valid!");
-        }
-        Bestelling saved = bestellingRepository.saveAndFlush(bestelling);
+        bestellingRepository.save(bestelling);
         System.out.println(bestelling);
-        System.out.println(saved);
-    }
-
-    @GetMapping("all")
-    public List<Bestelling> getAll() {
-        return bestellingRepository.findAll();
     }
 
     @GetMapping("{id}")
@@ -63,11 +50,6 @@ public class BestellingResource {
                 .findById(id)
                 .map(bestelling -> new ResponseEntity<>(bestelling, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<Bestelling>(HttpStatus.NOT_FOUND));
-    }
-
-    @DeleteMapping()
-    public void delete(@RequestBody Bestelling bestelling) {
-        bestellingRepository.delete(bestelling);
     }
 
 }

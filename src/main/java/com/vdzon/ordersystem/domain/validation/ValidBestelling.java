@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface ValidBestelling {
 
-    String message() default "{IpAddress.invalid}";
+    String message() default "{Bestelling is invalid}";
 
     Class<?>[] groups() default {};
 
