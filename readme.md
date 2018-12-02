@@ -82,3 +82,4 @@ Een bestelling mag nooit meer dan 3 bestelregels bevatten.
 Probleem: 
 Waar voeg je die validatie toe?
 Dat kan nu alleen bij de bestelregels, terwijl de validatie over de bestelling gaat.
+De resource is ook een rare plek, dit zou in het domain object (of een domein service) moeten zitten. Maar in de bestelregel domein object heb je geen toegang tot de database om de check te doen.

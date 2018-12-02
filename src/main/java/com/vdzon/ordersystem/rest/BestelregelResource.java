@@ -44,7 +44,9 @@ public class BestelregelResource {
     }
 
     private void validate(Bestelregel bestelregel){
-        // find all bestelregels met zelfde bestel_id en controleer of dat er niet meer dan 3 zijn
+        // zoek alle bestelregels met zelfde bestel_id en controleer of dat er niet meer dan 3 zijn
+
+        // dit is niet de goede plek om deze validatie te doen, dat hoort in het domein model thuis.
     }
 
 }
