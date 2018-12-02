@@ -1,26 +1,26 @@
 package com.vdzon.ordersystem.repositories;
 
 import com.vdzon.ordersystem.domain.Bestelling;
-import com.vdzon.ordersystem.domain.validation.ValidatieException;
+import com.vdzon.ordersystem.domain.BestellingValidator;
+import com.vdzon.ordersystem.domain.ValidatieException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.DataBinder;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class BestellingRepository {
-    @Autowired
+    final
     EntityManager entityManager;
 
-    ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-    Validator validator = validatorFactory.getValidator();
+    @Autowired
+    public BestellingRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
 
     @Transactional
     public void save(Bestelling bestelling) {
@@ -33,9 +33,11 @@ public class BestellingRepository {
     }
 
     private void validate(Bestelling bestelling) {
-        Set<ConstraintViolation<Object>> validate = validator.validate(bestelling);
-        if (!validate.isEmpty()) {
-            throw new ValidatieException(validate);
+        DataBinder dataBinder = new DataBinder(bestelling);
+        dataBinder.addValidators(new BestellingValidator());
+        dataBinder.validate();
+        if (dataBinder.getBindingResult().hasErrors()) {
+            throw new ValidatieException(dataBinder.getBindingResult().toString());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.vdzon.ordersystem.rest;
 
 import com.vdzon.ordersystem.domain.Bestelling;
+import com.vdzon.ordersystem.domain.ValidatieException;
 import com.vdzon.ordersystem.repositories.BestellingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,11 @@ public class BestellingResource {
                 .findById(id)
                 .map(bestelling -> new ResponseEntity<>(bestelling, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<Bestelling>(HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handle(ValidatieException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }

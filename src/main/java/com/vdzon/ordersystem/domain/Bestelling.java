@@ -1,6 +1,5 @@
 package com.vdzon.ordersystem.domain;
 
-import com.vdzon.ordersystem.domain.validation.ValidBestelling;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@ValidBestelling
 public class Bestelling {
     @Id
     private long id;

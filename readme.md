@@ -65,25 +65,21 @@ echo add user, bestelling en bestelregels
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"naam\":\"user1\"}" http://localhost:8080/klant
 curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"klantId\":1}" http://localhost:8080/bestelling
 
+echo probeer 1100 euro aan orderregels, dat lukt niet
+curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=stoel&aantal=4&stuksprijs=1100"
+
+echo probeer 4 orderregels, de laatste moet falen
 curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=stoel&aantal=4&stuksprijs=100"
+curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=tafel&aantal=1&stuksprijs=100"
+curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=barkruk&aantal=3&stuksprijs=80"
+curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=kastje&aantal=1&stuksprijs=120"
 
+echo verhoog prijs van barkruk, dit lukt gewoon
+curl -X POST -H "Content-Type:application/json" -d "{\"id\":3, \"product\":\"barkruk\",\"aantal\":4,\"stuksPrijs\":300,\"orderId\":3}" http://localhost:8080/bestelregel
 
-
-curl -X POST -H "Content-Type:application/json" -d "{\"id\":1, \"product\":\"tafel\",\"aantal\":1,\"stuksPrijs\":300,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
-curl -X POST -H "Content-Type:application/json" -d "{\"id\":2, \"product\":\"stoel\",\"aantal\":2,\"stuksPrijs\":100,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
-curl -X POST -H "Content-Type:application/json" -d "{\"id\":3, \"product\":\"barkruk\",\"aantal\":4,\"stuksPrijs\":100,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
-
-echo verhoog prijs van barkruk
-curl -X POST -H "Content-Type:application/json" -d "{\"id\":3, \"product\":\"barkruk\",\"aantal\":4,\"stuksPrijs\":200,\"orderId\":1,\"price\":10}" http://localhost:8080/bestelregel
-
-
-echo return all order regels
-curl http://localhost:8080/bestelregel/all
-
+echo return all bestelling
+curl http://localhost:8080/bestelling/1
 
 Nieuwe uitdaging:
-Een bestelling mag nooit meer dan 3 bestelregels bevatten.
+Zorg dat je niet meer de bestelregel buiten de bestelling om kunt aanpassen
 
-Probleem: 
-Waar voeg je die validatie toe?
-Dat kan nu alleen bij de bestelregels, terwijl de validatie over de bestelling gaat.
