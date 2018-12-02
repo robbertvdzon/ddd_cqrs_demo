@@ -46,19 +46,16 @@ REST API APPROACH:
 - validatie lukt helemaal niet (of alleen bij opslaan van de regels)
 - totaal bedrag : haal alle regels op (in zn geheel) en tel alles bij elkaar op.  
 
-DDD APPROACH:
-- voorwaarde: ddd domain model met aggregate root / geen repo voor regels, alleen voor klant,order, product
-- validate gaat prima
-- totaal bedrag: nu moeten we alle orders ophalen en alles optellen
-- dit zou je kunnen optimaliseren:
-    - voeg aantalregels en totaalbedrag veld toe aan de order, voor de JPA kun je lazy loading gebruiken zodat de count alleen alle orders hoeft op te halen en op te tellen
     
 DDD + CQRS:
 - als DDD, maar met read query met een enkele SQL statement.    
      
 
 ####################################################
-Oplossings richting: Voor elk domein object een rest interface en een repository.
+Oplossings richting: 
+Gebruik aggregate root. Dus alleen de Bestelling en Klant uit de database kunnen halen.
+Losse Bestelregels bestaan niet meer in het systeem.
+We kunnen nu goed valideren, en kan geen bestelling meer in het systeem komen zonder voor de bestelling validatie te gaan.
 
 
 echo add user, bestelling en bestelregels
@@ -74,12 +71,12 @@ curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=t
 curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=barkruk&aantal=3&stuksprijs=80"
 curl -X POST "http://localhost:8080/bestelling/addRegel?bestelid=1&productnaam=kastje&aantal=1&stuksprijs=120"
 
-echo verhoog prijs van barkruk, dit lukt gewoon
-curl -X POST -H "Content-Type:application/json" -d "{\"id\":3, \"product\":\"barkruk\",\"aantal\":4,\"stuksPrijs\":300,\"orderId\":3}" http://localhost:8080/bestelregel
-
 echo return all bestelling
 curl http://localhost:8080/bestelling/1
 
 Nieuwe uitdaging:
-Zorg dat je niet meer de bestelregel buiten de bestelling om kunt aanpassen
+Haal het totaal bedrag van alle bestellingen op
+
+Probeem:
+Als we het domain model gebruiken dan wordt dat heel erg inefficient 
 
