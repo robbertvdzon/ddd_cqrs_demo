@@ -1,17 +1,15 @@
-package com.vdzon.ordersystem.domain;
+package com.vdzon.ordersystem.read.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 @NoArgsConstructor
-public class Bestelregel {
+@Table(name = "bestelregel")
+public class ReadBestelregel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -19,7 +17,7 @@ public class Bestelregel {
     private int aantal;
     private double stuksPrijs;
 
-    public Bestelregel(String product, int aantal, double stuksPrijs) {
+    public ReadBestelregel(String product, int aantal, double stuksPrijs) {
         this.product = product;
         this.aantal = aantal;
         this.stuksPrijs = stuksPrijs;

@@ -1,8 +1,8 @@
-package com.vdzon.ordersystem.repositories;
+package com.vdzon.ordersystem.write.repositories;
 
-import com.vdzon.ordersystem.domain.Bestelling;
-import com.vdzon.ordersystem.domain.BestellingValidator;
-import com.vdzon.ordersystem.domain.ValidatieException;
+import com.vdzon.ordersystem.write.domain.Bestelling;
+import com.vdzon.ordersystem.write.domain.BestellingValidator;
+import com.vdzon.ordersystem.write.domain.ValidatieException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.DataBinder;

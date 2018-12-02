@@ -1,4 +1,4 @@
-package com.vdzon.ordersystem.domain;
+package com.vdzon.ordersystem.write.domain;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -18,6 +18,13 @@ public class BestellingValidator implements Validator {
         }
         if (bestelling.getBestelRegels().stream().mapToDouble(r -> r.getAantal() * r.getStuksPrijs()).sum() > 1000) {
             errors.rejectValue("bestelRegels", "maximaal 1000 euro per bestelling");
+        }
+        double totaalBedrag = bestelling.getBestelRegels()
+                .stream()
+                .mapToDouble(r->r.getAantal()*r.getStuksPrijs())
+                .sum();
+        if (bestelling.getTotaalBedrag()!=totaalBedrag) {
+            errors.rejectValue("bestelRegels", "totaalBedrag klopt niet");
         }
     }
 

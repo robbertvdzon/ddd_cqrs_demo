@@ -1,8 +1,8 @@
-package com.vdzon.ordersystem.rest;
+package com.vdzon.ordersystem.write.rest;
 
-import com.vdzon.ordersystem.domain.Bestelling;
-import com.vdzon.ordersystem.domain.ValidatieException;
-import com.vdzon.ordersystem.repositories.BestellingRepository;
+import com.vdzon.ordersystem.write.domain.Bestelling;
+import com.vdzon.ordersystem.write.domain.ValidatieException;
+import com.vdzon.ordersystem.write.repositories.BestellingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +43,6 @@ public class BestellingResource {
         bestelling.addRegel(productNaam, aantal, stuksprijs);
         bestellingRepository.save(bestelling);
         System.out.println(bestelling);
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<Bestelling> getById(@PathVariable long id) {
-        return bestellingRepository
-                .findById(id)
-                .map(bestelling -> new ResponseEntity<>(bestelling, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<Bestelling>(HttpStatus.NOT_FOUND));
     }
 
     @ExceptionHandler

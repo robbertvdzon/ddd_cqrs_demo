@@ -1,4 +1,4 @@
-package com.vdzon.ordersystem.domain;
+package com.vdzon.ordersystem.write.domain;
 
 public class ValidatieException extends RuntimeException {
 
