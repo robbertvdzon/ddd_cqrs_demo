@@ -7,8 +7,11 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Klant {
+public class Bestelregel {
     @Id
     private long id;
-    private String naam;
+    private long orderId;
+    private String product;
+    private int aantal;
+    private double stuksPrijs;
 }
